@@ -52,6 +52,7 @@ sig PDS {
     P.schedule[c, s], P.schedule[c][s], and c.(P.schedule)[s] have the same meaning
     Also, c.(P.requires) have the same meaning as P.requires[c]
 */
+
 pred AddComponent[P, Px : PDS, c : Component] {   -- The intents (variables) interprets the parametric constraint AddComponent as an operation leading from one "state" to another
     not c in P.components
     Px.components = P.components + c
@@ -70,13 +71,13 @@ pred HighestVersionPolicy[P : PDS] {
 
 fact SoundPDS {
     all P : PDS | {
-        all c : P.components, s : Service | -- 1
+        all c : P.components, s : Service | -- 1 : state 2 constraints within let a let-expression of the form "let x = E { ... }"
             let cx = P.schedule[c, s] {
                 (some cx iff s in c.import)     -- c and s require c' only iff c imports s
                 &&
-                (some cx => s in cx.export)  -- c and s require c' only if c' exports s
+                (some cx => s in cx.export)     -- c and s require c' only if c' exports s
             }
-        all c : P.components | c.(P.requires) = c.(P.schedule)[Service] -- 2
+        all c : P.components | c.(P.requires) = c.(P.schedule)[Service] -- 2 : define "requires" in terms of "schedule:"  a component "c" requires all those componets that aree scheduled to provide some service for "c"
         // c requires precisely those components that schedule says c depends on for some service
     }
 }
@@ -86,13 +87,12 @@ pred AGuidedSimulation[P, Px, Pxx : PDS, c1, c2 : Component] {
     HighestVersionPolicy[P] HighestVersionPolicy[Px] HighestVersionPolicy[Pxx]
 } run AGuidedSimulation for 3
 
+// Define explicitly that which system are identical (Alloy does not know and always assume non equal for all elemnts)
 pred StructurallyEqual[P, Px : PDS] {
   P.components = Px.components
   P.schedule = Px.schedule
   P.requires = Px.requires
-}
-
-run StructurallyEqual for 2
+} run StructurallyEqual for 2
 
 assert AddingIsFunctionalForPDSs {
     all P, Px, Pxx : PDS, c : Component {
