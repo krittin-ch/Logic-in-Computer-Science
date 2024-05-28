@@ -6,10 +6,25 @@ VAR
 
 ASSIGN
     init(status) := ready;
-    next(status) := case;
+    next(status) := case
         request : busy;
-        1 : { ready, busy };
+        TRUE : { ready, busy };
         esac;
 
 LTLSPEC
 G(request -> F status=busy)
+
+-- INITIALIZE NuSMV : NuSMV -int
+
+-- START MODELING
+
+-- read_model -i file_name.smv
+-- flatten_hierarchy
+-- encode_variables
+-- build_model
+-- pick_state -i
+
+-- PICKING STATE (0 - N)
+
+-- SIMULATING MODEL
+-- simulate -i -k NUMBER_OF_TRANSITIONS
