@@ -1,16 +1,13 @@
 MODULE main
-
 VAR
     request : boolean;
     status : { ready, busy };
-
 ASSIGN
     init(status) := ready;
     next(status) := case
         request : busy;
         TRUE : { ready, busy };
         esac;
-
 LTLSPEC
 G(request -> F status=busy)
 
@@ -18,7 +15,14 @@ G(request -> F status=busy)
 
 -- START MODELING
 
+-- read_model Functions  
+-- usage: read_model [-h] [-i <file>]
+--    -h           Prints the command usage.
+--    -i <file>    Reads the model from the specified <file>.
+
+-- Example
 -- read_model -i file_name.smv
+
 -- flatten_hierarchy
 -- encode_variables
 -- build_model
@@ -28,3 +32,10 @@ G(request -> F status=busy)
 
 -- SIMULATING MODEL
 -- simulate -i -k NUMBER_OF_TRANSITIONS
+
+
+-- Bounded Model Checking in NuSMV : NuSMV -bmc filename.smv
+-- Find the counterexamples
+
+-- Failure to find a counterexample does not mean there is none,
+-- but only that there is none of length u to the treshold
