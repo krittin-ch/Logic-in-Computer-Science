@@ -26,7 +26,7 @@ ASSIGN
         case
             ferryman = wolf : w;
             TRUE            : none;
-        esac union FALSE;
+        esac union none;
 
     next(goat) :=
         case
@@ -42,9 +42,12 @@ ASSIGN
 
     next(wolf) :=
         case
-            ferryman = wolf & next(wolf)    : next(ferryman);
-            TRUE                            : wolf;
+            ferryman = wolf & next(carry) = w   : next(ferryman);
+            TRUE                                : wolf;
         esac;
 LTLSPEC
     !(( (goat = cabbage | goat = wolf) -> goat = ferryman)
         U (cabbage & goat & wolf & ferryman))
+
+-- NuSMV -bmc .\ferrymanPuzzle.smv
+-- Find counterexamples
