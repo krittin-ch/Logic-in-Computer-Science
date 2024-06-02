@@ -49,5 +49,17 @@ LTLSPEC
     !(( (goat = cabbage | goat = wolf) -> goat = ferryman)
         U (cabbage & goat & wolf & ferryman))
 
+-- To find counterexamples
 -- NuSMV -bmc .\ferrymanPuzzle.smv
--- Find counterexamples
+
+-- To produce counterexamples by the number of transitions (bmc_length)
+-- NuSMV -bmc -bmc_length 6 .\ferrymanPuzzle.smv
+-- No counterexample for this case
+
+-- no counterexample found with bound 0
+-- no counterexample found with bound 1
+-- no counterexample found with bound 2
+-- no counterexample found with bound 3
+-- no counterexample found with bound 4
+-- no counterexample found with bound 5
+-- no counterexample found with bound 6
