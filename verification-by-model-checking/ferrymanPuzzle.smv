@@ -1,6 +1,6 @@
 MODULE main
 VAR
-    ferryman    : boolean;
+    ferryman    : boolean;  
     goat        : boolean;
     cabbage     : boolean;
     wolf        : boolean;

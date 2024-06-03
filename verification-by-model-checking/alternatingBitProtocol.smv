@@ -1,9 +1,9 @@
 MODULE main
 VAR 
-    s   : process sender(ack_chan.output);
-    r   : process receiver(msg_chan.output1, msg_chan.output2);
-    msg_chan    : process two-bit-chan(s.message1, s.message2);
-    ack_chan    : process one-bit-chan(r.ack);
+    s   : process sender(ack_chan.output);                          -- initialize sender
+    r   : process receiver(msg_chan.output1, msg_chan.output2);     -- initialize receiver
+    msg_chan    : process two-bit-chan(s.message1, s.message2);     -- initialize messages (1 and 2)
+    ack_chan    : process one-bit-chan(r.ack);                      -- initialize acknowledgement
 ASSIGN
     init(s.message2)    := FALSE;
     init(r.expected)    := FALSE;
@@ -11,6 +11,8 @@ ASSIGN
     init(msg_chan.output2)  := TRUE;
     init(ack_chan.output)   := TRUE;
 LTLSPEC
+    -- Safety: If the message bit 1 has been sent and the correct acknowledgement has been returned,
+    -- then a 1 was indeed reeived by the receiver
     G ( (s.st = sent & s.message1 = TRUE) -> msg_chan.output1 = TRUE)
 
 MODULE sender(ack)
@@ -39,6 +41,10 @@ ASSIGN
         esac;
 FAIRNESS running
 LTLSPEC
+    -- Liveness: Messages get through eventually.
+    -- Thus, for any state there is inevitably a future state in which the curretn message has got through.
+    -- In the module "sender", we specified LTLSPEC : G F st = sent.
+    -- Similarily, acknowledgement get through eventually. In the module "receiver", we wrote LTLSPEC : G F st = received.
     G F st = sent
 
 MODULE receiver(message1, message2)
@@ -67,12 +73,13 @@ ASSIGN
         esac;
 FAIRNESS running
 LTLSPEC
+    -- Liveness: Messages get through eventually.
     G F st = recieved
 
 MODULE one-bit-chan(input)
 VAR 
     output : boolean;
-    forget : boolean;
+    forget : boolean;   -- determines whether the current bit is lost or not
 ASSIGN
     next(output) :=
         case

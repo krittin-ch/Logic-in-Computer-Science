@@ -9,7 +9,7 @@ ASSIGN
         TRUE : {ready, busy} ;
         esac;
 LTLSPEC
-G(request -> F status=busy)
+    G(request -> F status=busy)
 
 -- INITIALIZE NuSMV : NuSMV -int
 
