@@ -5,12 +5,12 @@ This repository is based on *Logic in Computer Science: Modelling and Reasoning 
 
 The book encompasses **6 main chapters**:
 
-1. Propositional Logic
-2. Predicate Logic
-3. Verification by Model Checking
-4. Program Verification
-5. Modal Logics and Agents
-6. Binary Decision Diagrams
+>1. Propositional Logic
+>2. Predicate Logic
+>3. Verification by Model Checking
+>4. Program Verification
+>5. Modal Logics and Agents
+>6. Binary Decision Diagrams
 
 
 However, this repository focuses on the practical implementations of the following two chapters:
