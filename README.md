@@ -1,7 +1,7 @@
 # Logic in Computer Science
 
 ## Overview
-This repository is based on **__Logic in Computer Science: Modelling and Reasoning about Systems__** by **Michael Huth** and **Mark Ryan**. 
+This repository is based on **_Logic in Computer Science: Modelling and Reasoning about Systems_** by **Michael Huth** and **Mark Ryan**. 
 
 The book encompasses **6 main chapters**:
 
